@@ -1,3 +1,6 @@
+#include <SPI.h>
+#include <SD.h>
+
 char batteryState = 100;
 int ticRate = 10;
 
