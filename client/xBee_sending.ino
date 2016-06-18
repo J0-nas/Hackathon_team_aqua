@@ -1,0 +1,6 @@
+
+
+boolean sendGPS() {
+  return true;
+}
+
