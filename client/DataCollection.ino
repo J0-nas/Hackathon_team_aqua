@@ -11,12 +11,27 @@ boolean surfaced() {
   return true;
 }
 
-void collectSensorData() {
+void collectGPS() {
   
 }
 
+void collectSensorData() {
+  int p = getPhoto();
+  int t = getTemp();
+  Serial.print("temp:\t");
+  Serial.print(t);
+  Serial.print(", photo:\t");
+  Serial.print(p);
+  Serial.print("\n");
+  blink(100);
+}
+
 unsigned int getTemp() {
-  return 0;
+  return analogRead(A1);
+}
+
+unsigned int getPhoto() {
+  return analogRead(A0);
 }
 
 unsigned int getPH() {
