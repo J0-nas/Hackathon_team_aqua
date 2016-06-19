@@ -14,7 +14,7 @@ jQuery(function($) {
 var markers = [];
 
 function getData() {
-  $.getJSON('http://localhost:8080/coordinates', function (data) {
+  $.getJSON('http://172.16.72.197:8080/coordinates', function (data) {
     markers = data;
     console.log(markers);
     // for (i = 0; i < data.length; i++) {
