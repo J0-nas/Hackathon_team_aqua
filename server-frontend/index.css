@@ -30,6 +30,8 @@ footer .mdl-button i {
 
 body {
   height: 100%; }
+  body .mdl-layout .mdl-layout__header img {
+    height: 58px; }
   body .mdl-layout__content {
     height: calc(100% - 64px); }
     body .mdl-layout__content .page-content {
