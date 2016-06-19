@@ -19,8 +19,8 @@ var markersList = [];
 var labels = '123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 var labelIndex = 0;
 var route;
-// var url = 'http://172.16.72.197:8080/coordinates';
 var url = 'http://localhost:8080/coordinates';
+// var url = 'http://172.16.72.197:8080/coordinates';
 
 function toggleDataList() {
   var table = $("#data-list__table");
@@ -134,10 +134,16 @@ function sendClearDatabaseRequest() {
       url: url,
       type: 'DELETE',
       crossDomain: true,
+      contentType:'application/json',
+      dataType: 'text',
+      data: "",
       success: function(result) {
           console.log(result);
           clearMarkers();
       }
+      // error: function(err) {
+      //   console.log(err.err());
+      // }
   });
 }
 
