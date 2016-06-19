@@ -3,6 +3,12 @@ jQuery(function($) {
       // clearMarkers();/
         getData();
     });
+    $("#button__clear").click(function(){
+      sendClearDatabaseRequest();
+    });
+    $("#data-list__expand-button").click(function(){
+      toggleDataList();
+    });
     getData();
 });
 
@@ -13,10 +19,17 @@ var markersList = [];
 var labels = '123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 var labelIndex = 0;
 var route;
+// var url = 'http://172.16.72.197:8080/coordinates';
+var url = 'http://localhost:8080/coordinates';
+
+function toggleDataList() {
+  var table = $("#data-list__table");
+  table.toggle();
+  var icon = $("#data-list__expand-button--icon");
+  icon.html() == "expand_less" ? icon.html("expand_more") : icon.html("expand_less");
+}
 
 function getData() {
-  // let url = 'http://172.16.72.197:8080/coordinates';
-  let url = 'http://localhost:8080/coordinates';
   $.getJSON(url, function (data) {
     addAllMarkers(data);
   });
@@ -44,6 +57,21 @@ function addAllMarkers(markers) {
     markersList.push(marker);
   }
   setPolyline();
+  fillTable();
+}
+
+function fillTable() {
+  var table = $("#data-list__body");
+  table.empty();
+  for (var i = 0; i < markersList.length; i++) {
+    var entry = "\
+    <tr>\
+      <td class='mdl-data-table__cell--non-numeric'>" + markersList[i].title + "</td>\
+      <td>" + markersList[i].position + "</td>\
+    </tr>\
+    "
+    table.append(entry);
+  }
 }
 
 function setPolyline() {
@@ -96,12 +124,28 @@ function clearMarkers() {
   setMapOnAll(null);
   markersList = [];
   labelIndex = 0;
+  if (route != null) {
+    route.setMap(null);
+  }
+}
+
+function sendClearDatabaseRequest() {
+  $.ajax({
+      url: url,
+      type: 'DELETE',
+      crossDomain: true,
+      success: function(result) {
+          console.log(result);
+          clearMarkers();
+      }
+  });
 }
 
 function initMap() {
   map = new google.maps.Map(document.getElementById('map--canvas'), {
     center: {lat: 0, lng: 0},
-    zoom: 3
+    zoom: 3,
+    mapTypeId: google.maps.MapTypeId.SATELLITE
   });
 }
 

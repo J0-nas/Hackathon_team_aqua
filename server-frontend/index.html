@@ -12,10 +12,11 @@
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
       <div class="mdl-layout__header-row">
-        <span><img src="shark.png"/></span>   
+        <span><img src="shark.png"/></span>
         <span class="mdl-layout-title">Fintag Dashboard</span>
         <div class="mdl-layout-spacer"></div>
         <nav class="mdl-navigation mdl-layout--large-screen-only">
+          <button id="button__clear" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect"><i class="material-icons">clear</i></button>
           <button id="button__refresh" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect"><i class="material-icons">refresh</i></button>
         </nav>
       </div>
@@ -23,10 +24,23 @@
     <main class="mdl-layout__content">
       <div class="page-content">
         <div class="mdl-grid mdl-grid--no-spacing">
-          <div class="mdl-cell mdl-cell--12-col">
-            <div id="map--wrapper">
-              <div id="map--canvas"></div>
-            </div>
+          <div id="map--wrapper" class="mdl-cell mdl-cell--12-col">
+            <div id="map--canvas"></div>
+          </div>
+          <div class="data-list">
+            <p class="data-list__title">Recent Sightings</p>
+            <button id="data-list__expand-button" class=" mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"><i id="data-list__expand-button--icon" class="material-icons">expand_less</i></button>
+            <table id="data-list__table" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+              <thead>
+                <tr>
+                  <th class="mdl-data-table__cell--non-numeric">Date</th>
+                  <th>(Latitude, Longitude)</th>
+                </tr>
+              </thead>
+              <tbody id="data-list__body">
+                <!-- Filled dyanmically. -->
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

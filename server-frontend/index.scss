@@ -12,6 +12,9 @@ body {
       img {
         height: 58px;
       }
+      #button__clear {
+        margin-right: 16px;
+      }
     }
   }
   .mdl-layout__content {
@@ -20,14 +23,31 @@ body {
       height: 100%;
       .mdl-grid {
         height: 100%;
-        .mdl-cell {
+        #map--wrapper {
           height: 100%;
-          #map--wrapper {
-            height: 100%;
-          }
           #map--canvas {
             width: 100%;
             height: 100%;
+          }
+        }
+        .data-list {
+          position: absolute;
+          top: 78px;
+          left: 16px;
+          background-color: white;
+          color: black;
+          @include rounded(0.5em);
+          max-height: 80vh;
+          overflow-y: scroll;
+          #data-list__expand-button {
+            width: 100%;
+            display: inline-block;
+            text-align: center;
+          }
+          .data-list__title {
+            text-align: center;
+            margin-bottom: 0;
+            padding: 0 8px 0 8px;
           }
         }
       }
