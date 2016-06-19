@@ -10,6 +10,9 @@ var map;
 var infoWindow;
 var infoWindowContents = [];
 var markersList = [];
+var labels = '123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+var labelIndex = 0;
+var route;
 
 function getData() {
   // let url = 'http://172.16.72.197:8080/coordinates';
@@ -27,6 +30,7 @@ function addAllMarkers(markers) {
       position: position,
       map: map,
       title: markers[i]['time'],
+      label: labels[labelIndex++ % labels.length],
       animation: google.maps.Animation.DROP
     });
     infoWindow = new google.maps.InfoWindow(), marker, i;
@@ -38,7 +42,47 @@ function addAllMarkers(markers) {
       }
     })(marker, i));
     markersList.push(marker);
-  }  
+  }
+  setPolyline();
+}
+
+function setPolyline() {
+  var routeCoords = [];
+  for (i = 0; i < markersList.length; i++) {
+    routeCoords[i] = markersList[i].position;
+  }
+  var lineSymbol = {
+    path: google.maps.SymbolPath.CIRCLE,
+    scale: 8,
+    strokeColor: '#393'
+  };
+  if (route != null) {
+    route.setMap(null);
+  }
+  route = new google.maps.Polyline({
+    path: routeCoords,
+    icons: [{
+      icon: lineSymbol,
+      offset: '100%'
+    }],
+    geodesic: true,
+    strokeColor: '#FF0000',
+    strokeOpacity: 1.0,
+    strokeWeight: 2
+  });
+  route.setMap(map);
+  animateCircle(route);
+}
+
+function animateCircle(route) {
+    var count = 0;
+    window.setInterval(function() {
+      count = (count + 1) % 200;
+
+      var icons = route.get('icons');
+      icons[0].offset = (count / 2) + '%';
+      route.set('icons', icons);
+  }, 20);
 }
 
 function setMapOnAll(map) {
@@ -51,6 +95,7 @@ function setMapOnAll(map) {
 function clearMarkers() {
   setMapOnAll(null);
   markersList = [];
+  labelIndex = 0;
 }
 
 function initMap() {
