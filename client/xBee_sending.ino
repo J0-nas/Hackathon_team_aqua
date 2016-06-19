@@ -1,6 +1,1 @@
 
-
-boolean sendGPS() {
-  return true;
-}
-
