@@ -20,6 +20,7 @@ function getData() {
 }
 
 function addAllMarkers(markers) {
+  clearMarkers();
   for (i = 0; i < markers.length; i++) {
     var position = {lat: markers[i]['lat'], lng: markers[i]['long']};
     var marker = new google.maps.Marker({
@@ -36,7 +37,20 @@ function addAllMarkers(markers) {
         infoWindow.open(map, marker);
       }
     })(marker, i));
+    markersList.push(marker);
+  }  
+}
+
+function setMapOnAll(map) {
+  for (var i = 0; i < markersList.length; i++) {
+    markersList[i].setMap(map);
   }
+}
+
+// Removes the markers from the map, but keeps them in the array.
+function clearMarkers() {
+  setMapOnAll(null);
+  markersList = [];
 }
 
 function initMap() {
