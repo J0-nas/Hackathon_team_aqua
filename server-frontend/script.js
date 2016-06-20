@@ -172,12 +172,18 @@ function setPolyline() {
   animateCircle(route);
 }
 
+function reachedEndOfRoute(currentRoute) {
+  if (currentRoute == route) {
+    console.log("now");
+    refresh();
+  }
+  
+}
 function animateCircle(route) {
     var count = 0;
     window.setInterval(function() {
       if (count == 199) {
-        console.log("now");
-        refresh();
+        reachedEndOfRoute(route);
       }
       count = (count + 1) % 200;
       var icons = route.get('icons');
