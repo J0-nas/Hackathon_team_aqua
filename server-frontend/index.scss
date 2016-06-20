@@ -39,6 +39,7 @@ body {
           @include rounded(0.5em);
           max-height: 80vh;
           overflow-y: auto;
+          overflow-x: hidden;
           #data-list__expand-button {
             width: 100%;
             display: inline-block;
@@ -56,4 +57,8 @@ body {
       }
     }
   }
+}
+
+#demo-show-snackbar {
+  visibility: hidden;
 }

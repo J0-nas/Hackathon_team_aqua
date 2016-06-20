@@ -14,6 +14,22 @@ jQuery(function($) {
     });
     getData();
     setTimeout(refresh(), 5000);
+
+    'use strict';
+    var snackbarContainer = document.querySelector('#refresh-message');
+    var showSnackbarButton = document.querySelector('#demo-show-snackbar');
+    var handler = function(event) {
+    };
+    showSnackbarButton.addEventListener('click', function() {
+      'use strict';
+      var data = {
+        message: 'Refreshed sightings.',
+        timeout: 2000,
+        actionHandler: handler,
+        actionText: 'Okay'
+      };
+      snackbarContainer.MaterialSnackbar.showSnackbar(data);
+    });
 });
 
 var map;
@@ -62,6 +78,8 @@ function toggleDataList() {
 }
 
 function getData() {
+  var showSnackbarButton = document.querySelector('#demo-show-snackbar');
+  showSnackbarButton.click();
   $.getJSON(url, function (data) {
     addAllMarkers(data);
   });
@@ -69,6 +87,9 @@ function getData() {
 
 function addAllMarkers(markers) {
   clearMarkers();
+  if (markers == null || markers.length == 0) {
+    return;
+  }
   for (i = 0; i < markers.length; i++) {
     var position = {lat: markers[i]['lat'], lng: markers[i]['long']};
     var marker = new google.maps.Marker({
@@ -93,8 +114,8 @@ function addAllMarkers(markers) {
 }
 
 function fillTable() {
+  clearTable();
   var table = $("#data-list__body");
-  table.empty();
   for (var i = 0; i < markersList.length; i++) {
     var entry = "\
     <tr>\
@@ -104,6 +125,11 @@ function fillTable() {
     "
     table.append(entry);
   }
+}
+
+function clearTable() {
+  var table = $("#data-list__body");
+  table.empty();
 }
 
 function setPolyline() {
@@ -159,6 +185,7 @@ function setMapOnAll(map) {
 // Removes the markers from the map, but keeps them in the array.
 function clearMarkers() {
   setMapOnAll(null);
+  clearTable();
   markersList = [];
   labelIndex = 0;
   if (route != null) {
