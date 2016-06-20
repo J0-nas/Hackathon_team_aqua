@@ -58,11 +58,18 @@ function refreshIntervalButtonClicked() {
     setTimeout(refresh, refreshInterval);
   }
 }
-
+var lastTimeRefreshed = 0;
 function refresh() {
   // if (refreshInterval == 0) {
   //   return;
   // }
+   var now = new Date().getTime();
+   if (now - lastTimeRefreshed < 500) {
+     console.log("Too soon.");
+     return;
+   } else {
+     lastTimeRefreshed = now;
+   }
    console.log("Refreshing.");
    getData();
   //  if (refreshInterval > 0) {
@@ -168,11 +175,11 @@ function setPolyline() {
 function animateCircle(route) {
     var count = 0;
     window.setInterval(function() {
-      count = (count + 1) % 200;
-      // console.log(count);
       if (count == 199) {
+        console.log("now");
         refresh();
       }
+      count = (count + 1) % 200;
       var icons = route.get('icons');
       icons[0].offset = (count / 2) + '%';
       route.set('icons', icons);
