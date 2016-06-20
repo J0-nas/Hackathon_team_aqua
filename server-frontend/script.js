@@ -6,10 +6,14 @@ jQuery(function($) {
     $("#button__clear").click(function(){
       sendClearDatabaseRequest();
     });
+    $("#button__refresh--interval").click(function(){
+      refreshIntervalButtonClicked();
+    });
     $("#data-list__expand-button").click(function(){
       toggleDataList();
     });
     getData();
+    setTimeout(refresh(), 5000);
 });
 
 var map;
@@ -22,6 +26,33 @@ var route;
 var routeLength = 0;
 var url = 'http://localhost:8080/coordinates';
 // var url = 'http://172.16.72.197:8080/coordinates';
+var refreshInterval = 10000;
+
+function refreshIntervalButtonClicked() {
+  var button = $("#button__refresh--interval");
+  if (button.html() == "10") {
+    button.html(5);
+    refreshInterval = 5000;
+  } else if (button.html() == "5") {
+    button.html("<i class='material-icons'>clear</i>");
+    refreshInterval = 0;
+  } else {
+    button.html("10");
+    refreshInterval = 10000;
+    setTimeout(refresh, refreshInterval);
+  }
+}
+
+function refresh() {
+  if (refreshInterval == 0) {
+    return;
+  }
+   console.log("Refreshing.");
+   getData();
+   if (refreshInterval > 0) {
+     setTimeout(refresh, refreshInterval);
+   }
+}
 
 function toggleDataList() {
   var table = $("#data-list__table");
