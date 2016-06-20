@@ -38,16 +38,19 @@ body {
           color: black;
           @include rounded(0.5em);
           max-height: 80vh;
-          overflow-y: scroll;
+          overflow-y: auto;
           #data-list__expand-button {
             width: 100%;
             display: inline-block;
             text-align: center;
           }
+          #data-list__table {
+            @include rounded(0.5em);
+          }
           .data-list__title {
             text-align: center;
             margin-bottom: 0;
-            padding: 0 8px 0 8px;
+            padding: 8px;
           }
         }
       }

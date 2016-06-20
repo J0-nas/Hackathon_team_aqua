@@ -19,6 +19,7 @@ var markersList = [];
 var labels = '123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 var labelIndex = 0;
 var route;
+var routeLength = 0;
 var url = 'http://localhost:8080/coordinates';
 // var url = 'http://172.16.72.197:8080/coordinates';
 
@@ -76,8 +77,13 @@ function fillTable() {
 
 function setPolyline() {
   var routeCoords = [];
-  for (i = 0; i < markersList.length; i++) {
+  routeLength = 0;
+  for (var i = 0; i < markersList.length; i++) {
     routeCoords[i] = markersList[i].position;
+    if (i > 0) {
+      routeLength += Math.abs(markersList[i].position.lat() - markersList[i - 1].position.lat());
+      routeLength += Math.abs(markersList[i].position.lng() - markersList[i - 1].position.lng());
+    }
   }
   var lineSymbol = {
     path: google.maps.SymbolPath.CIRCLE,
@@ -110,7 +116,7 @@ function animateCircle(route) {
       var icons = route.get('icons');
       icons[0].offset = (count / 2) + '%';
       route.set('icons', icons);
-  }, 20);
+  }, routeLength / 5);
 }
 
 function setMapOnAll(map) {
