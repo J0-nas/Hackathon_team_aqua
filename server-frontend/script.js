@@ -13,7 +13,7 @@ jQuery(function($) {
       toggleDataList();
     });
     getData();
-    setTimeout(refresh(), 5000);
+    // setTimeout(refresh(), 5000);
 
     'use strict';
     var snackbarContainer = document.querySelector('#refresh-message');
@@ -60,14 +60,14 @@ function refreshIntervalButtonClicked() {
 }
 
 function refresh() {
-  if (refreshInterval == 0) {
-    return;
-  }
+  // if (refreshInterval == 0) {
+  //   return;
+  // }
    console.log("Refreshing.");
    getData();
-   if (refreshInterval > 0) {
-     setTimeout(refresh, refreshInterval);
-   }
+  //  if (refreshInterval > 0) {
+  //    setTimeout(refresh, refreshInterval);
+  //  }
 }
 
 function toggleDataList() {
@@ -169,11 +169,14 @@ function animateCircle(route) {
     var count = 0;
     window.setInterval(function() {
       count = (count + 1) % 200;
-
+      // console.log(count);
+      if (count == 199) {
+        refresh();
+      }
       var icons = route.get('icons');
       icons[0].offset = (count / 2) + '%';
       route.set('icons', icons);
-  }, routeLength / 5);
+  }, 25);
 }
 
 function setMapOnAll(map) {
